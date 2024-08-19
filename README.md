@@ -1,6 +1,6 @@
-# Text to Speech Converter
+# AIText2Voice
 
-This is a simple Text to Speech (TTS) application built using Python's `tkinter` library and OpenAI's API for text-to-speech conversion. It allows users to input text, select a voice, and generate audio files in MP3 format. Users can also apply optional audio filters using `ffmpeg`.
+This is a simple Text-to-speech (TTS) application built using Python's `tkinter` library and OpenAI's API for text-to-speech conversion. It allows users to input text, select a voice, and generate audio files in MP3 format. Users can also apply optional audio filters using `ffmpeg`.
 
 <a href="https://www.buymeacoffee.com/travin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
@@ -13,16 +13,16 @@ This is a simple Text to Speech (TTS) application built using Python's `tkinter`
 ## Requirements
 - Python 3.7+
 - Dependencies listed in `requirements.txt`
-- `ffmpeg` installed and available in your system's PATH.
+- `ffmpeg` is installed and is available in your system's PATH.
 
 ## Installation
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/text-to-speech-converter.git
-    cd text-to-speech-converter
+    git clone https://github.com/TravinDSO/AIText2Voice.git
+    cd AIText2Voice
     ```
-
+``
 2. **Install required Python packages:**
     ```bash
     pip install -r requirements.txt
