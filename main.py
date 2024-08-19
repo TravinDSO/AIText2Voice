@@ -11,15 +11,32 @@ class TextToSpeechApp:
     def __init__(self, root):
         # Load environment variables and initialize the OpenAI client
         load_dotenv('environment.env')
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        if not self.api_key:
-            raise ValueError("API key not found in the environment file.")
-        
-        # Initialize the OpenAI client
-        self.openai_client = openai.OpenAI(api_key=self.api_key)
+
+        if os.getenv("USE_AZURE") == "False":
+            
+            self.model = os.getenv("OPENAI_API_TTS_MODEL")
+
+            try:
+                self.ai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            except Exception as e:
+                raise ValueError(f"An error occurred while initializing the OpenAI client: {e}")
+        else:
+
+            self.model = os.getenv("AZURE_OPENAI_API_TTS_MODEL")
+
+            # Initialize the Azure OpenAI client
+            try:
+                self.ai_client = openai.AzureOpenAI(
+                    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+                    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+                    azure_endpoint=os.getenv("AZURE_OPENAI_API_ENDPOINT")
+                )
+            except Exception as e:
+                raise ValueError(f"An error occurred while initializing the Azure OpenAI client: {e}")
 
         # Predefined list of available voice types for TTS
         self.voice_types = ['Alloy', 'Echo', 'Fable', 'Onyx', 'Nova', 'Shimmer']
+
 
         # Setup the user interface for the application
         self.setup_gui(root)
@@ -109,8 +126,8 @@ class TextToSpeechApp:
 
         try:
             # Generate TTS audio using the OpenAI API client
-            response = self.openai_client.audio.speech.create(
-                model="tts-1",  # Specify the TTS model to use
+            response = self.ai_client.audio.speech.create(
+                model=self.model,  # Specify the TTS model to use
                 voice=selected_voice.lower(),  # Convert voice selection to lowercase as required
                 input=text,  # Pass the user-input text
             )
