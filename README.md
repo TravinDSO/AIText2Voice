@@ -4,7 +4,7 @@ This is a simple Text-to-speech (TTS) application built using Python's `tkinter`
 
 <a href="https://www.buymeacoffee.com/travin" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-![Screenshot of AIText2Voice App](./images/screenshot.png?raw=true)
+<img src="./images/screenshot.png?raw=true" alt="Screenshot of AIText2Voice App" width="40%">
 
 ## Features
 - Convert text (up to 300 characters) to speech using OpenAI's TTS models.
