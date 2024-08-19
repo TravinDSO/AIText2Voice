@@ -1,3 +1,5 @@
 /environment.env
 /output.mp3
 /venv
+modulated_output.mp3
+.gitignore
