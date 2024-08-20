@@ -7,7 +7,7 @@ This is a simple Text-to-speech (TTS) application built using Python's `tkinter`
 <img src="./images/screenshot.png?raw=true" alt="Screenshot of AIText2Voice App" width="40%">
 
 ## Features
-- Convert text (up to 300 characters) to speech using OpenAI's TTS models.
+- Convert text (up to 500 characters) to speech using OpenAI's TTS models.
 - Choose from multiple voice types.
 - Apply custom `ffmpeg` filters to the generated audio.
 - Export audio as an MP3 file.
@@ -64,7 +64,7 @@ This is a simple Text-to-speech (TTS) application built using Python's `tkinter`
     ```
 
 2. **Using the GUI:**
-    - Enter text (up to 300 characters).
+    - Enter text (up to 500 characters).
     - Choose a voice from the dropdown.
     - Optionally, enter a filter complex string for audio modulation.
     - Click "Generate Audio" to create and save the MP3 file.
