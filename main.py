@@ -13,8 +13,16 @@ class TextToSpeechApp:
         load_dotenv('environment.env')
 
         if os.getenv("USE_AZURE") == "False":
-            
+
             self.model = os.getenv("OPENAI_API_TTS_MODEL")
+
+            # IF model contains the letters hd, then it is high definition model
+            if "hd" in self.model.lower():
+                # Model costs $30 per 1 million characters
+                self.costs = 30 / 1_000_000
+            else:
+                # Model costs $15 per 1 million characters
+                self.costs = 15 / 1_000_000
 
             try:
                 self.ai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -23,6 +31,14 @@ class TextToSpeechApp:
         else:
 
             self.model = os.getenv("AZURE_OPENAI_API_TTS_MODEL")
+
+            # IF model contains the letters hd, then it is high definition model
+            if "hd" in self.model.lower():
+                # Model costs $30 per 1 million characters
+                self.costs = 30 / 1_000_000
+            else:
+                # Model costs $15 per 1 million characters
+                self.costs = 15 / 1_000_000
 
             # Initialize the Azure OpenAI client
             try:
@@ -46,12 +62,12 @@ class TextToSpeechApp:
         root.title("Text to Speech Converter")
 
         # Create and pack the label and text input field for entering the text to convert
-        tk.Label(root, text="Enter text to convert to speech (max 300 characters):").pack()
+        tk.Label(root, text="Enter text to convert to speech (max 500 characters):").pack()
         self.text_entry = tk.Text(root, height=10, width=50)
         self.text_entry.pack(pady=5)
 
         # Create and pack the label to display the remaining character count
-        self.char_count_label = tk.Label(root, text="300")
+        self.char_count_label = tk.Label(root, text="500")
         self.char_count_label.pack(pady=5)
 
         # Bind the update_char_count method to key release events in the text entry field
@@ -100,9 +116,10 @@ class TextToSpeechApp:
 
     def update_char_count(self, event=None):
         # Calculate remaining characters and update the label
-        char_count = 300 - len(self.text_entry.get("1.0", tk.END))
+        char_count = 500 - len(self.text_entry.get("1.0", tk.END))
+        char_cost = round(len(self.text_entry.get("1.0", tk.END)) * self.costs,6)
         color = "black" if char_count >= 0 else "red"
-        self.char_count_label.config(text=f"{abs(char_count)}" if char_count >= 0 else f"Over by: {abs(char_count)}", fg=color)
+        self.char_count_label.config(text=f"{abs(char_count)} | ${char_cost}" if char_count >= 0 else f"Over by: {abs(char_count)} | ${char_cost}", fg=color)
 
     def generate_audio(self):
         # Retrieve the user input: text to convert, selected voice, and optional filter
@@ -112,8 +129,8 @@ class TextToSpeechApp:
         audio_file = self.filename_entry.get().strip()
 
         # Validate the text and file name
-        if len(text) > 300:
-            messagebox.showwarning("Input Error", "Text must be less than 300 characters.")
+        if len(text) > 510:
+            messagebox.showwarning("Input Error", "Text must be less than 500 characters.")
             return
 
         if not audio_file.endswith(".mp3"):
